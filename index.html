@@ -1,0 +1,146 @@
+<!doctype html>
+	<head>
+		<style>
+			body {
+			    font-family: arial;
+			}
+			button {
+			    padding:10px;
+			    background-color:#6a67ce;
+			    color: #FFFFFF;
+			    border: 0px;
+			    cursor:pointer;
+			    border-radius: 5px;
+			}
+			
+			.scene {
+				position: absolute;
+  			top: 50%;
+ 				left: 50%;
+  			transform: translate(-50%, -50%);
+				display:none;
+				pointer-events: none;
+			}
+
+			.compiled {
+			display: flex;
+			justify-content: center;
+  		align-items: center;
+			}
+		</style>
+	</head>
+	<body onload="pass()">
+       <center>
+				 <p><button type="button" id="play" onclick="runSpeechRecognition()">Start Ben</button> &nbsp;</p>
+
+				 
+		<div class="compiled">
+			
+		<video class="scene" id="Yes" playsinline>
+  	<source src="scenes/Yes.mov" type="video/mp4">
+		</video>
+		
+		<video class="scene" id="No" playsinline>
+  	<source src="scenes/No.mov" type="video/mp4">
+		</video>
+		
+		<video class="scene" id="Hohoho" playsinline style="pointer-events: none;">
+  	<source src="scenes/Hohoho.mov" type="video/mp4">
+		</video>
+		
+		<video class="scene" id="Ugh" playsinline>
+  	<source src="scenes/Ugh.mov" type="video/mp4">
+		</video>
+
+		<video class="scene" id="Start" playsinline>
+  	<source src="scenes/Start.mov" type="video/mp4">
+		</video>
+
+		<br>
+
+		<p>Made by Brian Walczak</p>
+			</div>
+			 </center>
+		<script>
+			function pass() {
+				pass = prompt("Enter the password to access Ben (he hates strangers)")
+
+				if (pass != null) {
+				if(pass == "0000") {
+					alert("Correct")
+				}else{
+					window.location.replace("https://google.com");
+				}
+        }else{
+          window.location.replace("https://google.com");
+			}
+			}
+
+			/* JS comes here */
+		    function runSpeechRecognition() {
+					var action
+					var Yes = document.getElementById('Yes')
+					var No = document.getElementById('No')
+					var Hohoho = document.getElementById('Hohoho')
+					var Ugh = document.getElementById('Ugh')
+					var Start = document.getElementById('Start')
+
+						//If it doesn't exist
+					if (document.getElementById("play") == null) {
+                var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+                var recognition = new SpeechRecognition();
+            
+                recognition.onstart = function() {
+									console.log("Started")
+								};
+                
+                recognition.onspeechend = function() {
+                    recognition.stop();
+
+									var options = ["Yes","No","Ugh","Hohoho"];
+									action = options[Math.floor(Math.random() * options.length)];
+									chosen = document.getElementById(action)
+
+									//Hiding all the videos
+									Yes.style.display = "none"
+									No.style.display = "none"
+									Hohoho.style.display = "none"
+									Ugh.style.display = "none"
+									Start.style.display = "none"
+
+									//Showing and playing the video
+									chosen.style.display = "block"
+									chosen.play();
+
+								chosen.addEventListener('ended', (event) => {
+									runSpeechRecognition()
+								});
+                }
+              
+                 // start recognition
+                 recognition.start();
+				}else{
+					document.getElementById("play").remove();
+						
+					//Hiding all the videos
+					Yes.style.display = "none"
+					No.style.display = "none"
+					Hohoho.style.display = "none"
+					Ugh.style.display = "none"
+					Start.style.display = "none"
+
+					//Showing and playing start video
+					Start.style.display = "block"
+					Start.play();
+
+					Start.addEventListener('ended', (event) => {
+						runSpeechRecognition()
+					});
+					}
+				}
+		</script>
+	</body>
+</html> 
+
+<!--Don't share this to anyone-->
+<!--Made by Brian Walczak (do not delete this or I am removing access from you)-->
